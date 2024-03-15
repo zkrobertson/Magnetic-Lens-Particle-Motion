@@ -3,3 +3,5 @@
 IonPathPredicition
 
 .DS_Store
+build/*
+build/
