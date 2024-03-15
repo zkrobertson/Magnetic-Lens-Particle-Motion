@@ -2,7 +2,6 @@ import numpy as np
 
 if __name__ == "__main__":
     r = 3 * 2.54 / 100
-    r = 0.040
     eV = 400
     q = 1.602e-19
     mass = np.arange(1, 20, 1) * 1.67e-27
