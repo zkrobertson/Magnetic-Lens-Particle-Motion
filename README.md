@@ -6,3 +6,6 @@ Given a properly exported data file from Maxwell 3D, this code can read, import,
 
 ## Ion Path Prediction
 The magnetic field at the point of a particle is estimated by the distance weighted average of the 8 surrounding grid points from the simulation. Using the Lorentz force law, the path of the particle is predicted using Leap-Frog integration. This technique allows the path of the Ion to be modeled in less than 50 steps on average allowing monte-carlo simulations to quickly and efficiently analyze the behavior of the magnetic lens.
+
+## Python scripts
+Python scripts are used to first estimate the expected gyro motion of an Ion in a constant B-field, and then perform post processing on the simulations.
