@@ -1,9 +1,8 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 
-
 if __name__ == "__main__":
-    data = pd.read_csv("final_positions.csv", names=["Mass", "X", "Y", "Z"])
+    data = pd.read_csv("./../build/final_positions.csv", names=["Mass", "X", "Y", "Z"])
     print(data)
 
     incident_ions = plt.scatter(data["Z"], data["Y"], c=data["Mass"])

@@ -3,7 +3,9 @@ import pandas as pd
 
 
 if __name__ == "__main__":
-    data = pd.read_csv("starting_positions.csv", names=["Mass", "Y", "Z", "Collected"])
+    data = pd.read_csv(
+        "./../build/starting_positions.csv", names=["Mass", "Y", "Z", "Collected"]
+    )
 
     passed = data.loc[data["Collected"] == 1]
     failed = data.loc[data["Collected"] == 0]
