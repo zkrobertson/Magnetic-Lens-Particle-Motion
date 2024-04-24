@@ -1,8 +1,8 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#include <array>
 #include <fstream>
+#include <array>
 #include <iostream>
 #include <vector>
 #include <string>
@@ -20,6 +20,7 @@
 #define DT 1E-8
 
 using vec = std::array<double, 3>;
+
 std::ostream& operator<<(std::ostream& out, const vec& a);
 std::ofstream& operator<<(std::ofstream& out, const vec& a);
 vec operator-(const vec& a, const vec& b);

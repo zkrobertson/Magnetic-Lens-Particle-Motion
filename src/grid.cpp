@@ -18,6 +18,8 @@ std::size_t getIndex(Dimensions& dim, std::array<double,3> input)
 
 std::array<double, 3> get_mag_vector(std::vector<Node>& grid, Dimensions& dim, std::array<double, 3> pos)
 {
+    // --- Surrounding 8 Points ---
+    // The particle is somewhere in the cube defined by these points
     std::array<std::size_t, 8> indices { 
         getIndex(dim, pos),
         getIndex(dim, {pos[0]+dim.X_step, pos[1], pos[2]}),

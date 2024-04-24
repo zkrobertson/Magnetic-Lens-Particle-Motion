@@ -16,7 +16,15 @@ void monte_carlo(std::vector<Node>& grid, Grid::Dimensions& dim, int N, double e
     std::vector<Particle> finishing_positions {};
     std::vector<ion_starting_data> starting_positions {};
     std::array<double, 7> available_masses { 1,2,4,12,14,16,18 };
-    std::array<double, 5> available_y_center { 0.0025, 0.0075, 0.0125, 0.0175, 0.0225 };
+    std::array<double, 2> available_z_center { z_center, z_center+0.0026 };
+    std::array<double, 25> available_y_center;
+
+    double location {0.0};
+    for (int i{0};i<25;++i)
+    {
+        available_y_center[i] = location;
+        location+=0.001;
+    }
     
     std::cout << "Running" << std::flush;
 
@@ -27,15 +35,17 @@ void monte_carlo(std::vector<Node>& grid, Grid::Dimensions& dim, int N, double e
         double vel_x = sqrt(2 * 1.602e-19 * eV / mass);
 
         // --- Random Entrance Position ---
-        double r { static_cast<double>(Random::get(0, 100)) * 1E-6 };
-        double theta { static_cast<double>(Random::get(0, 2*3141592) * 1E-6) };
+        double aperature_y { static_cast<double>(Random::get(0, 1000)) * 0.35E-6 };
+        double aperature_z { static_cast<double>(Random::get(0, 1000)) * 1.3E-6 };
 
-        double y_center { available_y_center[Random::get(0,5)] };
-        double y { r*sin(theta) + y_center };
-        double z { r*cos(theta) + z_center };
+        double y_center { available_y_center[Random::get(0,25)] };
+        double z_center { available_z_center[Random::get(0,2)] }; 
+
+        double y { aperature_y + y_center };
+        double z { aperature_z + z_center };
 
         Particle myIon {
-            {0, y, z},       // pos
+            {0.0129, y, z},       // pos
             {vel_x, 0, 0},   // vel
             {0,0,0},         // acc
             mass
@@ -70,7 +80,8 @@ void monte_carlo(std::vector<Node>& grid, Grid::Dimensions& dim, int N, double e
     }
     starting.close();
 
-    std::cout << size(finishing_positions) << '\n';
+    std::cout << "Out of " << N << " ions " << size(finishing_positions) << " passed." << '\n';
+    std::cout << "Pass Efficiency = " << size(finishing_positions) / static_cast<double>(N) << '\n';
 }
 
 void single_ion(std::vector<Node>& grid, Grid::Dimensions& dim, double mass, double eV, double z, double y)
