@@ -6,4 +6,4 @@ IonPathPredicition
 build/*
 build/
 
-gyro_radius.py
+py/gyro_radius.py
