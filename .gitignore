@@ -5,3 +5,5 @@ IonPathPredicition
 .DS_Store
 build/*
 build/
+
+gyro_radius.py
