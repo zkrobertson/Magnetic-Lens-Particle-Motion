@@ -8,8 +8,8 @@ if __name__ == "__main__":
 
     incident_ions = plt.scatter(data["Z"], data["Y"], c=data["Mass"])
     plt.colorbar(incident_ions)
-    plt.ylim((0, 0.025))
-    plt.xlim(0.02, 0.15)
+    plt.ylim((0, 0.010))
+    plt.xlim(0.0, 0.14)
 
     plt.figure()
 
@@ -20,7 +20,7 @@ if __name__ == "__main__":
     plt.title("Bottom")
     for m in masses:
         gas = data.loc[data["Mass"] == m]
-        gas = gas.loc[gas["Y"] < 0.008]
+        gas = gas.loc[gas["Y"] < 0.003]
         distribution = plt.hist(gas["Z"], 50)
 
     plt.subplot(312)
@@ -28,8 +28,8 @@ if __name__ == "__main__":
     plt.title("Middle")
     for m in masses:
         gas = data.loc[data["Mass"] == m]
-        gas = gas.loc[gas["Y"] > 0.008]
-        gas = gas.loc[gas["Y"] < 0.016]
+        gas = gas.loc[gas["Y"] > 0.003]
+        gas = gas.loc[gas["Y"] < 0.006]
         distribution = plt.hist(gas["Z"], 50)
 
     plt.subplot(311)
@@ -37,7 +37,7 @@ if __name__ == "__main__":
     plt.title("Top")
     for m in masses:
         gas = data.loc[data["Mass"] == m]
-        gas = gas.loc[gas["Y"] > 0.016]
+        gas = gas.loc[gas["Y"] > 0.006]
         distribution = plt.hist(gas["Z"], 50)
 
     plt.show()

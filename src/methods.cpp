@@ -31,23 +31,23 @@ void monte_carlo(std::vector<Node>& grid, Grid::Dimensions& dim, int N, double e
     for (int i {0};i<N;++i){
 
         // --- Random Mass ---
-        double mass = available_masses[Random::get(0,7)] * 1.67E-27;
+        double mass = available_masses[Random::get(0,6)] * 1.67E-27;
         double vel_x = sqrt(2 * 1.602e-19 * eV / mass);
 
         // --- Random Entrance Position ---
-        double aperature_y { static_cast<double>(Random::get(0, 1000)) * 0.35E-6 };
-        double aperature_z { static_cast<double>(Random::get(0, 1000)) * 1.3E-6 };
+        double aperature_y { static_cast<double>(Random::get(0, 10000)) * 10E-7 };
+        double aperature_z { static_cast<double>(Random::get(0, 10000)) * 1E-7 };
 
-        double y_center { available_y_center[Random::get(0,25)] };
-        double z_center { available_z_center[Random::get(0,2)] }; 
+        // double y_center { available_y_center[Random::get(0,25)] };
+        // double z_center { available_z_center[Random::get(0,2)] }; 
 
-        double y { aperature_y + y_center };
-        double z { aperature_z + z_center };
+        double y { aperature_y };
+        double z { aperature_z };
 
         Particle myIon {
-            {0.0129, y, z},       // pos
-            {vel_x, 0, 0},   // vel
-            {0,0,0},         // acc
+            {0.0, y, z},          // pos
+            {vel_x, 0, 0},        // vel
+            {0,0,0},              // acc
             mass
         };
 

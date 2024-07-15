@@ -5,13 +5,13 @@
 
 int main(int argc, char* argv[])
 {
-    std::string filename { "Fillets.fld" };
+    std::string filename { "/Users/kramer/Documents/CEPPE GRA Projects/LANL Project/code/magfields/VectorField.fld" };
     std::string method {};
     double energy {500};
     int monte_carlo_iterations {10000};
-    double hole_center_z { 0.012 }; 
-    double single_ion_y {0.0125};
-    double single_ion_z {0.01};
+    double hole_center_z { 0.001 }; 
+    double single_ion_y {0.005};
+    double single_ion_z {0.001};
     double mass {1};
 
     for (int i {1};i<argc;++i)

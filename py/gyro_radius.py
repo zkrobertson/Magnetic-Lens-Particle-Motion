@@ -1,12 +1,15 @@
 import numpy as np
 
 if __name__ == "__main__":
-    B = 20e-4
-    eV = 1
     q = 1.602e-19
-    mass = np.arange(1, 20, 1) * 1.67e-27
+    mass = 1 * 1.67e-27
+    eV = np.arange(700, 2000, 100)
+    B = 1700e-4
 
     velocity = np.sqrt(2 * q * eV / mass)
-    r = mass * velocity / B / q * 10000
+    r = velocity * mass / q / B
 
-    print("Gyro Radius: ", r)
+    # eV = velocity**2 * mass / q / 2
+
+    for e, r in zip(eV, r):
+        print(f"For {e} eV the mean turning radius at {B*10000} gauss is {r*100} cm")

@@ -55,13 +55,13 @@ void Particle::write_pos_log()
 
 bool Particle::inRegion()
 {
-    if (m_pos[0] < 0 || m_pos[0] > 0.115){
+    if (m_pos[0] < 0 || m_pos[0] > 0.63){
         return false;
     }
-    if (m_pos[1] < 0 || m_pos[1] > 0.0254){
+    if (m_pos[1] < 0 || m_pos[1] > 0.010){
         return false;
     }
-    if (m_pos[2] < 0 || m_pos[2] > 0.150){
+    if (m_pos[2] < 0 || m_pos[2] > 0.140){
         return false;
     }
     return true;
