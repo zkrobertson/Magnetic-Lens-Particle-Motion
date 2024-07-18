@@ -6,12 +6,20 @@ if __name__ == "__main__":
         "./../src/build/final_positions.csv", names=["Mass", "X", "Y", "Z"]
     )
 
-    incident_ions = plt.scatter(data["Z"], data["Y"], c=data["Mass"])
-    plt.colorbar(incident_ions)
-    plt.ylim((0, 0.010))
-    plt.xlim(0.0, 0.14)
+    fig, ax = plt.subplots(1, 1)
+    ion_mass = ax.scatter(data["Z"], data["Y"], c=data["Mass"])
+    # incident_ions = plt.scatter(data["Z"], data["Y"], c=data["Mass"])
+    fig.colorbar(ion_mass)
+    ax.set_ylim(0, 0.010)
+    ax.set_xlim(0.022, 0.1236)
+    ax.set_ylabel("Location in Exit Aperature [m]")
+    ax.set_xlabel("Location in Exit Aperature [m]")
+    ax.set_aspect(1)
 
     plt.figure()
+    plt.show()
+
+    quit()
 
     masses = [1, 2, 4, 12, 14, 16, 18]
 

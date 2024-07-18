@@ -19,6 +19,7 @@ void monte_carlo(std::vector<Node>& grid, Grid::Dimensions& dim, int N, double e
     std::array<double, 2> available_z_center { z_center, z_center+0.0026 };
     std::array<double, 25> available_y_center;
 
+
     double location {0.0};
     for (int i{0};i<25;++i)
     {
@@ -32,7 +33,9 @@ void monte_carlo(std::vector<Node>& grid, Grid::Dimensions& dim, int N, double e
 
         // --- Random Mass ---
         double mass = available_masses[Random::get(0,6)] * 1.67E-27;
-        double vel_x = sqrt(2 * 1.602e-19 * eV / mass);
+
+        // --- fluxuation in energy ---
+        double vel_x = sqrt(2 * 1.602e-19 * (eV + static_cast<double>(Random::get(0,50))) / mass);
 
         // --- Random Entrance Position ---
         double aperature_y { static_cast<double>(Random::get(0, 10000)) * 10E-7 };
