@@ -17,11 +17,8 @@ if __name__ == "__main__":
     ax.set_aspect(1)
 
     plt.figure()
-    plt.show()
 
-    quit()
-
-    masses = [1, 2, 4, 12, 14, 16, 18]
+    masses = [1, 2, 4, 14, 16, 17, 18]
 
     plt.subplot(313)
     plt.xlim(0.02, 0.15)
