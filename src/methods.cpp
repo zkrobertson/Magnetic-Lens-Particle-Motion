@@ -15,37 +15,23 @@ void monte_carlo(std::vector<Node>& grid, Grid::Dimensions& dim, int N, double e
 {
     std::vector<Particle> finishing_positions {};
     std::vector<ion_starting_data> starting_positions {};
-    std::array<double, 7> available_masses { 1,2,4,12,14,16,18 };
-    std::array<double, 2> available_z_center { z_center, z_center+0.0026 };
-    std::array<double, 25> available_y_center;
+    std::array<double, 7> available_masses { 1,2,4,14,16,17,18 };
 
-
-    double location {0.0};
-    for (int i{0};i<25;++i)
-    {
-        available_y_center[i] = location;
-        location+=0.001;
-    }
     
     std::cout << "Running" << std::flush;
 
     for (int i {0};i<N;++i){
 
         // --- Random Mass ---
-        double mass = available_masses[Random::get(0,6)] * 1.67E-27;
+        int index { Random::get(0,6) };
+        double mass = available_masses[index] * 1.67E-27;
 
         // --- fluxuation in energy ---
-        double vel_x = sqrt(2 * 1.602e-19 * (eV + static_cast<double>(Random::get(0,50))) / mass);
+        double vel_x = sqrt(2 *1.602e-19 * (eV + static_cast<double>(Random::get(0,50))) / mass);
 
         // --- Random Entrance Position ---
-        double aperature_y { static_cast<double>(Random::get(0, 10000)) * 10E-7 };
-        double aperature_z { static_cast<double>(Random::get(0, 10000)) * 1E-7 };
-
-        // double y_center { available_y_center[Random::get(0,25)] };
-        // double z_center { available_z_center[Random::get(0,2)] }; 
-
-        double y { aperature_y };
-        double z { aperature_z };
+        double y { static_cast<double>(Random::get(0, 10000)) * 10E-7 };
+        double z { static_cast<double>(Random::get(0, 10000)) * 1E-7 + 1E-3};
 
         Particle myIon {
             {0.0, y, z},          // pos

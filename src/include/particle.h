@@ -15,7 +15,8 @@ public:
         std::array<double, 3> pos,
         std::array<double, 3> vel,
         std::array<double, 3> acc,
-        double mass );
+        double mass
+    );
 
     std::array<double, 3> pos();
     std::array<double, 3> vel();
