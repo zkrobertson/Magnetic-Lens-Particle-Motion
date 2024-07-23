@@ -27,7 +27,7 @@ void monte_carlo(std::vector<Node>& grid, Grid::Dimensions& dim, int N, double e
         double mass = available_masses[index] * 1.67E-27;
 
         // --- fluxuation in energy ---
-        double vel_x = sqrt(2 *1.602e-19 * (eV + static_cast<double>(Random::get(0,50))) / mass);
+        double vel_x = sqrt(2 *1.602e-19 * (eV + static_cast<double>(Random::get(0,5))) / mass);
 
         // --- Random Entrance Position ---
         double y { static_cast<double>(Random::get(0, 10000)) * 10E-7 };
