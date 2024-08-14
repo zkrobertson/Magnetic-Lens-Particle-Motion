@@ -1,17 +1,15 @@
 import numpy as np
 
 if __name__ == "__main__":
-    charge = [i * 1.602e-19 for i in range(1, 3)]
-    mass = [i * 1.67e-27 for i in range(1, 3)]
+    charge = [1.602e-19]
+    mass = [18 * 1.67e-27]
 
-    eV = 1000
-    B = 1700e-4
+    eV = 2400
+    r = 0.06
 
     velocity = [np.sqrt(2 * q * eV / m) for q, m in zip(charge, mass)]
 
-    r = [v * m / q / B for v, q, m in zip(velocity, charge, mass)]
+    B = [10000 * v * m / q / r for v, q, m in zip(velocity, charge, mass)]
+    print(B)
 
     # eV = velocity**2 * mass / q / 2
-
-    print(f"H+: r = {r[0]}")
-    print(f"He++: r = {r[1]}")
