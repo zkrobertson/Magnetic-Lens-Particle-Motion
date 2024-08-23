@@ -33,6 +33,8 @@ private:
     std::array<double, 3> m_vel;
     std::array<double, 3> m_acc;
     double m_mass;
+    // NOTE: Should we really log the particles postition? 
+    // this might take up a lot of space and might be better done externally
     std::vector<std::array<double, 3>> m_pos_log {};
 };
 

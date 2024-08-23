@@ -1,5 +1,7 @@
 #include "config.h"
 
+// TODO: Particle should hold initial position (unless the particle motion is logged then index [0] is initial position)
+
 Particle::Particle (
     std::array<double, 3> pos,
     std::array<double, 3> vel,
@@ -9,7 +11,13 @@ Particle::Particle (
     , m_vel { vel }
     , m_acc { acc }
     , m_mass { mass }
-{ m_pos_log.emplace_back(m_pos); }
+{ 
+    m_pos_log.emplace_back(m_pos); 
+
+    if (mass > 0.5){
+        m_mass = mass*1.66e-27;
+    }
+}
 
 vec Particle::pos() { return m_pos; }
 vec Particle::vel() { return m_vel; }
@@ -44,6 +52,8 @@ bool Particle::updatePos(vec B, const bool save_trajectory)
     return inRegion();
 }
 
+// NOTE: should the output file always be single_ion_path.csv? 
+// Think the filename should be an argument maybe with a the default as single_ion_path
 void Particle::write_pos_log()
 {
     std::ofstream outf { "single_ion_path.csv" };
@@ -53,6 +63,7 @@ void Particle::write_pos_log()
     }
 }
 
+// TODO: These should be bound by grid dimensions or at least passed in as arguments
 bool Particle::inRegion()
 {
     if (m_pos[0] < 0 || m_pos[0] > 0.63){

@@ -61,7 +61,18 @@ int main(int argc, char* argv[])
         std::cout << "\tMass: " << mass << '\n'
             << "\tEnergy: " << energy << '\n'
             << "\t(Z,Y): (" << single_ion_z << ',' << single_ion_y << ")\n";
-        Methods::single_ion(grid, dimensions, mass, energy, single_ion_z, single_ion_y);
+
+        mass *= 1.67E-27;
+        double vel_x = sqrt(2 * 1.602e-19 * energy / mass);
+
+        Particle myIon {
+            {0, single_ion_y, single_ion_z},
+            {vel_x, 0, 0},
+            {0,0,0},
+            mass
+        };
+
+        Methods::single_ion(grid, dimensions, myIon);
 
     } else if (method == "monte"){
         std::cout << "Running a monte carlo simulation\n"

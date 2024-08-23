@@ -73,28 +73,22 @@ void monte_carlo(std::vector<Node>& grid, Grid::Dimensions& dim, int N, double e
     std::cout << "Pass Efficiency = " << size(finishing_positions) / static_cast<double>(N) << '\n';
 }
 
-void single_ion(std::vector<Node>& grid, Grid::Dimensions& dim, double mass, double eV, double z, double y)
+// TODO: Input should just be a const Grid and Particle
+// Then return the Particle
+void single_ion(std::vector<Node>& grid, Grid::Dimensions& dim, Particle& particle)
 {
-    mass *= 1.67E-27;
-    double vel_x = sqrt(2 * 1.602e-19 * eV / mass);
-
-    Particle myIon {
-        {0, y, z},
-        {vel_x, 0, 0},
-        {0,0,0},
-        mass
-    };
-
-    myIon.print();
+    particle.print();
     std::cout << "Running simulation...\n\n";
 
     int count {0};
-    while ( myIon.inRegion() && count++ < 10000) myIon.updatePos( Grid::get_mag_vector(grid, dim, myIon.pos()), true );
+    while ( particle.inRegion() && count++ < 10000) particle.updatePos( Grid::get_mag_vector(grid, dim, particle.pos()), true );
 
+
+    // NOTE: Put this be behind a log boolean
     std::cout << "Results\n-------\nSteps Taken: " << count << '\n'
         << "Time Elapsed: " << count*DT << '\n';
-    myIon.print();
-    myIon.write_pos_log();
+    particle.print();
+    particle.write_pos_log();
 }
 
 }
