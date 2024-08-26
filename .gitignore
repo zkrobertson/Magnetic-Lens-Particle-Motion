@@ -7,3 +7,7 @@ build/*
 build/
 
 py/gyro_radius.py
+
+lib/
+bin/
+pyvenv.cfg
