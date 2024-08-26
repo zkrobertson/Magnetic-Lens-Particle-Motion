@@ -24,16 +24,22 @@ vec Particle::vel() { return m_vel; }
 vec Particle::acc() { return m_acc; }
 double Particle::mass() { return m_mass; }
 
+bool Particle::get_save_trajectory(){ return m_save_trajectory; }
+void Particle::set_save_trajectory(const bool b) { m_save_trajectory = b; }
+
 void Particle::print()
 {
     std::cout << "Mass: " << m_mass << " \n"
         << "Pos: " << m_pos << '\n'
         << "Vel: " << m_vel << '\n'
         << "Acc: " << m_acc << '\n';
+
+    if (m_save_trajectory) std::cout << "Saving Trajectory\n";
+    else std::cout << "Not Saving Trajectory\n";
 }
 
 // Leap-Frog Integration
-bool Particle::updatePos(vec B, const bool save_trajectory)
+bool Particle::updatePos(vec B)
 {
     vec vxb = Vec::cross(m_vel, B);
 
@@ -46,7 +52,7 @@ bool Particle::updatePos(vec B, const bool save_trajectory)
     m_acc = vxb;
 
     // Log positions for single_ion_path
-    if (save_trajectory)
+    if (m_save_trajectory)
         m_pos_log.emplace_back(m_pos);
 
     return inRegion();

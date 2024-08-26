@@ -23,8 +23,11 @@ public:
     std::array<double, 3> acc();
     double mass();
 
+    bool get_save_trajectory();
+    void set_save_trajectory(const bool);
+
     void print();
-    bool updatePos(std::array<double, 3>, const bool);
+    bool updatePos(std::array<double, 3>);
     void write_pos_log();
     bool inRegion();
 
@@ -36,6 +39,7 @@ private:
     // NOTE: Should we really log the particles postition? 
     // this might take up a lot of space and might be better done externally
     std::vector<std::array<double, 3>> m_pos_log {};
+    bool m_save_trajectory = false;
 };
 
 #endif

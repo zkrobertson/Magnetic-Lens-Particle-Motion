@@ -3,6 +3,14 @@
 namespace Methods 
 {
 
+struct rectangle_coordinates
+{
+    double y_offset;
+    double height;
+    double z_offset;
+    double width;
+};
+
 struct ion_starting_data
 {
     double y;
@@ -11,84 +19,113 @@ struct ion_starting_data
     bool collected;
 };
 
-void monte_carlo(std::vector<Node>& grid, Grid::Dimensions& dim, int N, double eV, double z_center)
+vec defaultRandomPosition()
 {
-    std::vector<Particle> finishing_positions {};
-    std::vector<ion_starting_data> starting_positions {};
-    std::array<double, 7> available_masses { 1,2,4,14,16,17,18 };
+    double y_offset {0.0};
+    double height   {10E-3};
+    double z_offset {1E-3};
+    double width    {1E-3};
 
-    
+    double y { static_cast<double>(Random::get(0, 10000)) * 1E-4 * height + y_offset };
+    double z { static_cast<double>(Random::get(0, 10000)) * 1E-4 * width  + z_offset };
+
+    return vec { 0.0, y, z };
+}
+
+void monte_carlo(
+    std::vector<Node>& grid, 
+    Grid::Dimensions& dim, 
+    int N, 
+    double eV, 
+    vec (*rpf)(),
+    std::string logfile_path,
+    std::vector<double> available_masses
+)
+{
+    std::ofstream output { logfile_path };
+    output << "x0,y0,z0,vx0,vy0,vz0,x1,y1,z1,vx1,vy1,vz1,mass,pass?\n";
+
     std::cout << "Running" << std::flush;
 
     for (int i {0};i<N;++i){
 
         // --- Random Mass ---
-        int index { Random::get(0,6) };
+        int index { Random::get(0,std::size(available_masses)) };
         double mass = available_masses[index] * 1.67E-27;
 
-        // --- fluxuation in energy ---
-        double vel_x = sqrt(2 *1.602e-19 * (eV + static_cast<double>(Random::get(0,5))) / mass);
+        // --- energy to velocity ---
+        double vel_x = sqrt(2 * 1.602e-19 * eV / mass);
 
         // --- Random Entrance Position ---
-        double y { static_cast<double>(Random::get(0, 10000)) * 10E-7 };
-        double z { static_cast<double>(Random::get(0, 10000)) * 1E-7 + 1E-3};
+        vec start_position { rpf() };
 
+        // --- Create Particle ---
         Particle myIon {
-            {0.0, y, z},          // pos
+            start_position,       // pos
             {vel_x, 0, 0},        // vel
             {0,0,0},              // acc
             mass
         };
 
+        for (double i : myIon.pos()) output << i << ',';
+        for (double i : myIon.vel()) output << i << ',';
+
         // --- Particle Path Integration ---
-        int count {0};
-        while ( myIon.inRegion() && count++ < 10000) myIon.updatePos( Grid::get_mag_vector(grid, dim, myIon.pos()), false );
+        single_ion(grid, dim, myIon);
 
-        // --- Ion Passed through to the Collection Screen ---
-        if (myIon.pos()[0] < 0) finishing_positions.emplace_back( myIon );
+        for (double i : myIon.pos()) output << i << ',';
+        for (double i : myIon.vel()) output << i << ',';
 
-        // --- Ion Starting Positions logged with whether it passed or not ---
-        starting_positions.emplace_back( ion_starting_data { y, z, mass, myIon.pos()[0] < 0 } );
+        output << mass/1.67E-27 << ',' << 0 << '\n';
 
         // --- Loading Bar ---
         if (i%(N/3) == 0) std::cout << '.' << std::flush;
     }
     std::cout << '\n';
 
-    std::ofstream final { "final_positions.csv" };
-    for (Particle& ion : finishing_positions)
-    {
-        final << ion.mass()/1.67E-27 << ',' << ion.pos() << '\n';
-    }
-    final.close();
-
-    std::ofstream starting { "starting_positions.csv" };
-    for (ion_starting_data& ion : starting_positions)
-    {
-        starting << ion.mass/1.67E-27 << ',' << ion.y << ',' << ion.z << ',' << ion.collected << '\n';
-    }
-    starting.close();
-
-    std::cout << "Out of " << N << " ions " << size(finishing_positions) << " passed." << '\n';
-    std::cout << "Pass Efficiency = " << size(finishing_positions) / static_cast<double>(N) << '\n';
+    output.close();
 }
 
 // TODO: Input should just be a const Grid and Particle
-// Then return the Particle
-void single_ion(std::vector<Node>& grid, Grid::Dimensions& dim, Particle& particle)
+// NOTE: Particle is passed by ref
+void single_ion(
+    std::vector<Node>& grid, 
+    Grid::Dimensions& dim, 
+    Particle& particle, 
+    const double time_step,
+    const bool printResults, 
+    const bool logResults
+)
 {
-    particle.print();
-    std::cout << "Running simulation...\n\n";
+    if (printResults)
+    {
+        particle.print();
+        std::cout << "Running simulation...\n\n";
+    }
 
     int count {0};
-    while ( particle.inRegion() && count++ < 10000) particle.updatePos( Grid::get_mag_vector(grid, dim, particle.pos()), true );
+    while ( particle.inRegion() && count++ < 1000) particle.updatePos( Grid::get_mag_vector(grid, dim, particle.pos()) );
 
+    if (count >= 1000) 
+    {
+        std::cerr << "Number of steps reached maximum. Could be caught in propagation loop\n";
 
-    // NOTE: Put this be behind a log boolean
-    std::cout << "Results\n-------\nSteps Taken: " << count << '\n'
-        << "Time Elapsed: " << count*DT << '\n';
-    particle.print();
-    particle.write_pos_log();
+        if (!printResults) particle.print(); // if the particle will not be printed then print it here for troubleshooting
+    }
+
+    if (printResults)
+    {
+        std::cout << "Results\n-------\nSteps Taken: " << count << '\n'
+            << "Particle Motion Time Elapsed: " << count*time_step/1e-6 << " us" << '\n';
+        particle.print();
+    }
+
+    if (logResults)
+    {
+        particle.write_pos_log();
+    }
+
+    return;
 }
 
 }

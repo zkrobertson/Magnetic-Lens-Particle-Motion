@@ -9,6 +9,8 @@
 #include <string_view>
 #include <random>
 
+using vec = std::array<double, 3>;
+
 #include "Random.h"
 #include "node.h"
 #include "myVectorMath.h"
@@ -19,7 +21,6 @@
 
 #define DT 1E-8
 
-using vec = std::array<double, 3>;
 
 std::ostream& operator<<(std::ostream& out, const vec& a);
 std::ofstream& operator<<(std::ofstream& out, const vec& a);
