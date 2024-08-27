@@ -40,6 +40,7 @@ int main(int argc, char* argv[])
     simulation mySimulation;
 
     // There has to be a better way to do this. I am thinking these can be set in a setting file that can be created with a python script
+    // Even better export the simulation struct into a python module that can set the values and then run a simulation
     for (int i {1};i<argc;++i)
     {
         if ( strcmp(argv[i], "-f") == 0 ){
