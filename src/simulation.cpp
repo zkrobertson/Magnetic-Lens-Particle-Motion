@@ -3,7 +3,6 @@
 #include "particle.h"
 
 #include <iostream>
-#include <pybind11/pybind11.h>
 
 void Simulation::setGridFilename(const std::string filename){ m_grid_filename = filename; }
 std::string Simulation::getGridFilename(){ return m_grid_filename; }

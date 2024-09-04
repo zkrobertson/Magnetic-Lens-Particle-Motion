@@ -16,6 +16,7 @@ pybind11_add_module(ParticleSimulation
     particle.cpp 
     methods.cpp
     simulation.cpp
+    pybind.cpp
 )
 
 target_include_directories(ParticleSimulation PUBLIC
