@@ -1,21 +1,14 @@
 #include "simulation.h"
 #include "methods.h"
+#include "particle.h"
+
+#include <iostream>
 
 void Simulation::setGridFilename(const std::string filename){ m_grid_filename = filename; }
 std::string Simulation::getGridFilename(){ return m_grid_filename; }
 
-void SinglIonSimulation::run(const std::string results_filename)
+void SingleIonSimulation::run(const std::string results_filename)
 {
-
-    Grid::Dimensions dimensions { read_file_header(m_grid_filename) };
-    if (dimensions.size <= 1)
-    {
-        std::cerr << "Invalid Dimensions or they could not be determine\n";
-        return 1;
-    }
-
-    std::vector<Node> grid { import_file(m_grid_filename) }; 
-
     // Output a Simulation description
     std::cout << "Running a single ion\n";
     std::cout << "\tMass: " << m_mass << '\n'
@@ -36,18 +29,17 @@ void SinglIonSimulation::run(const std::string results_filename)
     };
 
     // myIon is passed by reference and the position is modified by propogating it through the b-field
-    Methods::single_ion(grid, dimensions, myIon);
+    Methods::single_ion(m_grid, m_dimensions, myIon);
     // Can access the new position of myIon here
-
 }
 
 void MonteCarloSimulation::run(const std::string results_filename)
 {
     std::cout << "Running a monte carlo simulation\n"
-        << "\tNumber of Samples: " << mySimulation.monte_carlo_iterations << '\n'
-        << "\tEnergy: " << mySimulation.energy << '\n';
+        << "\tNumber of Samples: " << m_monte_carlo_iterations << '\n'
+        << "\tEnergy: " << m_energy << '\n';
 
     // NOTE: Optionally pass a function to return a random starting position
     // default is defaultRandomPosition(y_offset=0, height=10, z_offset=1E-3, width=1)
-    Methods::monte_carlo(grid, dimensions, mySimulation.monte_carlo_iterations, mySimulation.energy);
+    Methods::monte_carlo(m_grid, m_dimensions, m_monte_carlo_iterations, m_energy);
 }

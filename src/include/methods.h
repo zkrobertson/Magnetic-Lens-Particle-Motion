@@ -6,7 +6,7 @@
 #include "particle.h"
 #include "Random.h"
 
-#include <array>
+#include <vector>
 
 namespace Methods 
 {

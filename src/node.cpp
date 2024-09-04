@@ -1,5 +1,9 @@
 #include "node.h"
 
+#include <iostream>
+#include <array>
+
+
 void Node::print() 
 {
     std::cout << "\tPos: " 

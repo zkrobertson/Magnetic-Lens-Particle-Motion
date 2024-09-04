@@ -2,20 +2,35 @@
 #define SIMULATION_H
 
 #include "myVectorMath.h"
+#include "grid.h"
+#include "file_input.h"
+
+#include <string>
+#include <vector>
 
 class Simulation 
 {
 public:
     Simulation(std::string grid_filename, double energy)
-    : m_energy{energy}, m_grid_filename{grid_filename}
-    {}
+    : m_energy{energy}, 
+        m_grid_filename{grid_filename}, 
+        m_dimensions { read_file_header(grid_filename) }, // Throw Invalid Dimensions Error in this function
+        m_grid { import_file(grid_filename) }
+    {
+
+    }
 
     void setGridFilename(const std::string);
     std::string getGridFilename();
 
-private:
+// So derived classes can access these members
+protected:
+    Grid::Dimensions m_dimensions;
+    std::vector<Node> m_grid;
     double m_energy;
-    std::string m_grid_filename { "/Users/kramer/Documents/CEPPE GRA Projects/LANL Project/code/magfields/VectorField.fld" };
+
+private:
+    std::string m_grid_filename;
 };
 
 class SingleIonSimulation : public Simulation
@@ -48,7 +63,7 @@ public:
         std::string grid_filename,
         double energy, 
         std::string starting_position_function,
-        std::vector<double> available_masses,
+        std::vector<double> available_masses
     ):
         Simulation {grid_filename, energy},
         m_starting_position_function{starting_position_function},

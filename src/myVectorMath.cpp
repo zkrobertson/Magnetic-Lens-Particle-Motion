@@ -1,4 +1,4 @@
-#include "config.h"
+#include "myVectorMath.h"
 
 std::ostream& operator<<(std::ostream& out, const vec& a)
 {
@@ -25,7 +25,7 @@ vec cross(vec& a, vec& b)
     return { a[1]*b[2]-a[2]*b[1], -a[0]*b[2]+a[2]*b[0], a[0]*b[1]-a[1]*b[0] };
 }
 
-double magnitude(vec& a)
+double magnitude(vec a)
 {
     return sqrt(pow(a[0],2) + pow(a[1],2) + pow(a[2],2));
 }

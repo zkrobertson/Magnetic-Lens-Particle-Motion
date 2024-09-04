@@ -3,6 +3,7 @@
 namespace Methods 
 {
 
+// Used to set outer bounds of Random Starting Position
 struct rectangle_coordinates
 {
     double y_offset;
@@ -11,6 +12,8 @@ struct rectangle_coordinates
     double width;
 };
 
+// Used to log starting position of an ion
+// Will get phased out for a more comprehensive logging system
 struct ion_starting_data
 {
     double y;
@@ -19,6 +22,8 @@ struct ion_starting_data
     bool collected;
 };
 
+// Used to randomly choose a position within the entrance position
+// Switch to struct rectangle_coordinates
 vec defaultRandomPosition()
 {
     double y_offset {0.0};
@@ -32,7 +37,7 @@ vec defaultRandomPosition()
     return vec { 0.0, y, z };
 }
 
-// TODO: Input should just be a const Grid and Particle
+// TODO: Input should just be a const Grid (Grid dimensions should be a part of grid class) and Particle
 // NOTE: Particle is passed by ref
 void single_ion(
     std::vector<Node>& grid, 
@@ -50,7 +55,7 @@ void single_ion(
     }
 
     int count {0};
-    while ( particle.inRegion() && count++ < 1000) particle.updatePos( Grid::get_mag_vector(grid, dim, particle.pos()) );
+    while ( particle.inRegion() && count++ < 1000) particle.updatePos( Grid::get_mag_vector(grid, dim, particle.pos()), time_step );
 
     if (count >= 1000) 
     {

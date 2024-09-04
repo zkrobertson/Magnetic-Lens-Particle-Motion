@@ -1,14 +1,15 @@
 #ifndef NODE_H
 #define NODE_H
 
-#include <iostream>
-#include <array>
+#include "myVectorMath.h"
 
 struct Node 
 {
-    std::array<double,3> pos;
-    std::array<double,3> mag;
+    vec pos;
+    vec mag;
+    // TODO: Add electric field
 
+    // NOTE: kinda not super useful?
     enum Coordinates
     {
         X,

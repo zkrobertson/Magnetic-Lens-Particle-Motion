@@ -4,7 +4,7 @@
 #include "myVectorMath.h"
 #include "node.h"
 
-#include <array>
+#include <vector>
 
 namespace Grid 
 {
@@ -26,8 +26,8 @@ struct Dimensions
     const std::size_t size { length*width*height };
 };
 
-std::size_t getIndex(Dimensions& dim, std::array<double, 3> input);
-std::array<double, 3> get_mag_vector(std::vector<Node>& grid, Dimensions& dim, std::array<double, 3> pos);
+std::size_t getIndex(Dimensions& dim, vec input);
+vec get_mag_vector(std::vector<Node>& grid, Dimensions& dim, vec pos);
 
 }
 

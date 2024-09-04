@@ -1,9 +1,9 @@
-#include "config.h"
+#include "grid.h"
 
 namespace Grid
 {
 
-std::size_t getIndex(Dimensions& dim, std::array<double,3> input)
+std::size_t getIndex(Dimensions& dim, vec input)
 {
     if (input[0]>dim.X_max) input[0] = dim.X_max;
     if (input[1]>dim.Y_max) input[1] = dim.Y_max;
@@ -16,7 +16,7 @@ std::size_t getIndex(Dimensions& dim, std::array<double,3> input)
     return z_steps + y_steps + x_steps;
 }
 
-std::array<double, 3> get_mag_vector(std::vector<Node>& grid, Dimensions& dim, std::array<double, 3> pos)
+std::array<double, 3> get_mag_vector(std::vector<Node>& grid, Dimensions& dim, vec pos)
 {
     // --- Surrounding 8 Points ---
     // The particle is somewhere in the cube defined by these points
@@ -33,7 +33,7 @@ std::array<double, 3> get_mag_vector(std::vector<Node>& grid, Dimensions& dim, s
 
     std::array<double, 8> r;
     double sum_r {0};
-    std::array<double, 3> mag;
+    vec mag;
 
     for (std::size_t i {0};i<8;++i){
         r[i] = Vec::magnitude( pos - grid[indices[i]].pos );

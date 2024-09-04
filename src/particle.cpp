@@ -1,11 +1,15 @@
-#include "config.h"
+#include "particle.h"
+
+#include <array>
+#include <iostream>
+#include <fstream>
 
 // TODO: Particle should hold initial position (unless the particle motion is logged then index [0] is initial position)
 
 Particle::Particle (
-    std::array<double, 3> pos,
-    std::array<double, 3> vel,
-    std::array<double, 3> acc,
+    vec pos,
+    vec vel,
+    vec acc,
     double mass
 ) : m_pos { pos }
     , m_vel { vel }
@@ -39,14 +43,14 @@ void Particle::print()
 }
 
 // Leap-Frog Integration
-bool Particle::updatePos(vec B)
+bool Particle::updatePos(vec B, const double dt)
 {
     vec vxb = Vec::cross(m_vel, B);
 
     for (std::size_t i {0};i<3;++i){
-        m_pos[i] = m_pos[i] + m_vel[i] * DT + 0.5 * m_acc[i] * DT * DT;
+        m_pos[i] = m_pos[i] + m_vel[i] * dt + 0.5 * m_acc[i] * dt * dt;
         vxb[i] = vxb[i] * 1.602E-19 / m_mass;
-        m_vel[i] = m_vel[i] + (vxb[i] + m_acc[i])/2 * DT;
+        m_vel[i] = m_vel[i] + (vxb[i] + m_acc[i])/2 * dt;
     }
 
     m_acc = vxb;

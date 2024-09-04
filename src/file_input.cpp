@@ -1,4 +1,8 @@
-#include "config.h"
+#include "file_input.h"
+
+#include <fstream>
+#include <iostream>
+#include <sstream>
 
 Grid::Dimensions read_file_header(std::string_view filename)
 {
