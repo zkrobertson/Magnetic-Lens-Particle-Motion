@@ -58,6 +58,8 @@ Grid::Dimensions read_file_header(std::string_view filename)
 
     inf.close();
     std::cout << filename << " read header and set dimensions. File closed\n";
+    std::cout << "Step Sizes: (" << x_step << ',' << y_step << ',' << z_step << ")\n";
+    std::cout << "Limits: (" << x_max << ',' << y_max << ',' << z_max << ")\n";
 
     return Grid::Dimensions{
         x_step,
@@ -67,7 +69,6 @@ Grid::Dimensions read_file_header(std::string_view filename)
         y_max,
         z_max,
     };
-
 }
 
 std::vector<Node> import_file(std::string_view filename)

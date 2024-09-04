@@ -2,6 +2,7 @@
 #define PARTICLE_H
 
 #include "myVectorMath.h"
+#include "grid.h"
 
 #include <vector>
 
@@ -24,10 +25,10 @@ public:
     void set_save_trajectory(const bool);
 
     void print();
-    bool updatePos(const vec, const double);
+    void updatePos(const vec, const double);
     void write_pos_log();
-    bool inRegion();
-    bool passed();
+    bool inRegion(const Grid::Dimensions&);
+    bool passed(const Grid::Dimensions&);
 
 private:
     vec m_pos;

@@ -43,7 +43,7 @@ void Particle::print()
 }
 
 // Leap-Frog Integration
-bool Particle::updatePos(const vec B, const double dt)
+void Particle::updatePos(const vec B, const double dt)
 {
     vec vxb = Vec::cross(m_vel, B);
 
@@ -58,8 +58,6 @@ bool Particle::updatePos(const vec B, const double dt)
     // Log positions for single_ion_path
     if (m_save_trajectory)
         m_pos_log.emplace_back(m_pos);
-
-    return inRegion();
 }
 
 // NOTE: should the output file always be single_ion_path.csv? 
@@ -74,23 +72,23 @@ void Particle::write_pos_log()
 }
 
 // TODO: These should be bound by grid dimensions or at least passed in as arguments
-bool Particle::inRegion()
+bool Particle::inRegion(const Grid::Dimensions& dim)
 {
-    if (m_pos[0] < 0 || m_pos[0] > 0.63){
+    if (m_pos[0] < 0 || m_pos[0] > dim.X_max){
         return false;
     }
-    if (m_pos[1] < 0 || m_pos[1] > 0.010){
+    if (m_pos[1] < 0 || m_pos[1] > dim.Y_max){
         return false;
     }
-    if (m_pos[2] < 0 || m_pos[2] > 0.140){
+    if (m_pos[2] < 0 || m_pos[2] > dim.Z_max){
         return false;
     }
     return true;
 }
 
-bool Particle::passed()
+bool Particle::passed(const Grid::Dimensions& dim)
 {
-    if (m_pos[0] < 0 && m_pos[1] < 0.010 && m_pos[1] > 0.0 && m_pos[2] > 0.010 && m_pos[2] < 0.125)
+    if (m_pos[0] < 0 && m_pos[1] > 0.0 && m_pos[2] > dim.Y_max && m_pos[2] < dim.Z_max)
         return true;
     return false;
 }

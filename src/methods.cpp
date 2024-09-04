@@ -57,7 +57,7 @@ void single_ion(
     }
 
     int count {0};
-    while ( particle.inRegion() && count++ < 1000) particle.updatePos( Grid::get_mag_vector(grid, dim, particle.pos()), time_step );
+    while ( particle.inRegion(dim) && count++ < 1000) particle.updatePos( Grid::get_mag_vector(grid, dim, particle.pos()), time_step );
 
     if (count >= 1000) 
     {
@@ -126,7 +126,7 @@ void monte_carlo(
         for (double i : myIon.vel()) output << i << ',';
 
         output << mass/1.67E-27 << ',';
-        output << myIon.passed() << '\n';
+        output << myIon.passed(dim) << '\n';
 
         // --- Loading Bar ---
         if (i%(N/3) == 0) std::cout << '.' << std::flush;
