@@ -1,20 +1,22 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.15)
 
-project(IonPathPrediction VERSION 1.0)
+project(PyBind11_ParticleSimulation VERSION 2.0)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-add_executable(IonPathPrediction 
-    main.cpp 
+pybind11_add_module(ParticleSimulation 
     node.cpp 
     file_input.cpp 
     myVectorMath.cpp 
     grid.cpp 
     particle.cpp 
-    methods.cpp)
+    methods.cpp
+    simulation.cpp
+)
 
-target_include_directories(IonPathPrediction PUBLIC
+target_include_directories(ParticleSimulation PUBLIC
     "${PROJECT_BINARY_DIR}"
     "${PROJECT_SOURCE_DIR}/include"
 )
+install(TARGETS example DESTINATION .)

@@ -3,11 +3,13 @@
 
 #include <array>
 
+using vec = std::array<double, 3>;
+
 namespace Vec 
 {
 
-std::array<double, 3> cross(std::array<double, 3>& a, std::array<double, 3>& b);
-double magnitude(std::array<double, 3> vec);
+vec cross(vec& a, vec& b);
+double magnitude(vec& a);
 
 }
 

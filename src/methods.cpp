@@ -32,6 +32,48 @@ vec defaultRandomPosition()
     return vec { 0.0, y, z };
 }
 
+// TODO: Input should just be a const Grid and Particle
+// NOTE: Particle is passed by ref
+void single_ion(
+    std::vector<Node>& grid, 
+    Grid::Dimensions& dim, 
+    Particle& particle, 
+    const double time_step,
+    const bool printResults, 
+    const bool logResults
+)
+{
+    if (printResults)
+    {
+        particle.print();
+        std::cout << "Running simulation...\n\n";
+    }
+
+    int count {0};
+    while ( particle.inRegion() && count++ < 1000) particle.updatePos( Grid::get_mag_vector(grid, dim, particle.pos()) );
+
+    if (count >= 1000) 
+    {
+        std::cerr << "Number of steps reached maximum. Could be caught in propagation loop\n";
+
+        if (!printResults) particle.print(); // if the particle will not be printed then print it here for troubleshooting
+    }
+
+    if (printResults)
+    {
+        std::cout << "Results\n-------\nSteps Taken: " << count << '\n'
+            << "Particle Motion Time Elapsed: " << count*time_step/1e-6 << " us" << '\n';
+        particle.print();
+    }
+
+    if (logResults)
+    {
+        particle.write_pos_log();
+    }
+
+    return;
+}
+
 void monte_carlo(
     std::vector<Node>& grid, 
     Grid::Dimensions& dim, 
@@ -84,48 +126,6 @@ void monte_carlo(
     std::cout << '\n';
 
     output.close();
-}
-
-// TODO: Input should just be a const Grid and Particle
-// NOTE: Particle is passed by ref
-void single_ion(
-    std::vector<Node>& grid, 
-    Grid::Dimensions& dim, 
-    Particle& particle, 
-    const double time_step,
-    const bool printResults, 
-    const bool logResults
-)
-{
-    if (printResults)
-    {
-        particle.print();
-        std::cout << "Running simulation...\n\n";
-    }
-
-    int count {0};
-    while ( particle.inRegion() && count++ < 1000) particle.updatePos( Grid::get_mag_vector(grid, dim, particle.pos()) );
-
-    if (count >= 1000) 
-    {
-        std::cerr << "Number of steps reached maximum. Could be caught in propagation loop\n";
-
-        if (!printResults) particle.print(); // if the particle will not be printed then print it here for troubleshooting
-    }
-
-    if (printResults)
-    {
-        std::cout << "Results\n-------\nSteps Taken: " << count << '\n'
-            << "Particle Motion Time Elapsed: " << count*time_step/1e-6 << " us" << '\n';
-        particle.print();
-    }
-
-    if (logResults)
-    {
-        particle.write_pos_log();
-    }
-
-    return;
 }
 
 }

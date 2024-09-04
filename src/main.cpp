@@ -15,26 +15,6 @@ struct simulation
     double mass { 1 };
 };
 
-void setSimulation(simulation& sim)
-{
-    // Read setting file 
-    //
-    // --- FORMAT ---
-    // 1. vector field filename
-    // 2. method 
-    // 3. energy 
-    // 4. logfile name (optional)
-
-    // If the method is Monte Carlo Simulation
-    // 1. Number of Iterations
-    // 2. Available Masses (optional)
-    // 3. RandomPositionFunction (optional)
-
-    // If the method is Just a Single Ion
-    // 1. position (x,y,z)
-    // 2. mass
-}
-
 int main(int argc, char* argv[])
 {
     simulation mySimulation;
