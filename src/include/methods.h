@@ -2,6 +2,7 @@
 #define METHODS_H
 
 #include "node.h"
+#include "grid.h"
 #include "myVectorMath.h"
 #include "particle.h"
 #include "Random.h"
