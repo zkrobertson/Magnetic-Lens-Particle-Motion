@@ -43,8 +43,12 @@ void Particle::print()
 }
 
 // Leap-Frog Integration
-bool Particle::updatePos(vec B, const double dt)
+bool Particle::updatePos(const vec B, const double dt)
 {
+    std::cout << "-----Step-----" << '\n';
+    print();
+    std::cout << "B-Field: " << B << "\n\n";
+
     vec vxb = Vec::cross(m_vel, B);
 
     for (std::size_t i {0};i<3;++i){
@@ -79,7 +83,7 @@ bool Particle::inRegion()
     if (m_pos[0] < 0 || m_pos[0] > 0.63){
         return false;
     }
-    if (m_pos[1] < 0 || m_pos[1] > 0.010){
+    if (m_pos[1] < 0 || m_pos[1] > 0.030){
         return false;
     }
     if (m_pos[2] < 0 || m_pos[2] > 0.140){

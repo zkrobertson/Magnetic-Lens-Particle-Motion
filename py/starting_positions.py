@@ -4,7 +4,7 @@ import numpy as np
 
 if __name__ == "__main__":
     data = pd.read_csv(
-        "./../src/build/starting_positions.csv", names=["Mass", "Y", "Z", "Collected"]
+        "./../build/starting_positions.csv", names=["Mass", "Y", "Z", "Collected"]
     )
 
     passed = data.loc[data["Collected"] == 1]

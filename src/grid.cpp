@@ -16,7 +16,7 @@ std::size_t getIndex(Dimensions& dim, vec input)
     return z_steps + y_steps + x_steps;
 }
 
-std::array<double, 3> get_mag_vector(std::vector<Node>& grid, Dimensions& dim, vec pos)
+vec get_mag_vector(const std::vector<Node>& grid, Dimensions& dim, vec pos)
 {
     // --- Surrounding 8 Points ---
     // The particle is somewhere in the cube defined by these points
@@ -33,7 +33,7 @@ std::array<double, 3> get_mag_vector(std::vector<Node>& grid, Dimensions& dim, v
 
     std::array<double, 8> r;
     double sum_r {0};
-    vec mag;
+    vec mag { 0.0, 0.0, 0.0 };
 
     for (std::size_t i {0};i<8;++i){
         r[i] = Vec::magnitude( pos - grid[indices[i]].pos );

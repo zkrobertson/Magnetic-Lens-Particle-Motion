@@ -7,6 +7,7 @@
 void Simulation::setGridFilename(const std::string filename){ m_grid_filename = filename; }
 std::string Simulation::getGridFilename(){ return m_grid_filename; }
 
+// TODO: ADD time step, print to console boolean, and log boolean + log filename
 void SingleIonSimulation::run(const std::string results_filename)
 {
     // Output a Simulation description
@@ -29,10 +30,11 @@ void SingleIonSimulation::run(const std::string results_filename)
     };
 
     // myIon is passed by reference and the position is modified by propogating it through the b-field
-    Methods::single_ion(m_grid, m_dimensions, myIon);
+    Methods::single_ion(m_grid, m_dimensions, myIon, 1E-8, true, true);
     // Can access the new position of myIon here
 }
 
+// TODO: Time step, logfilename
 void MonteCarloSimulation::run(const std::string results_filename)
 {
     std::cout << "Running a monte carlo simulation\n"

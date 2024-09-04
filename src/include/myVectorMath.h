@@ -14,7 +14,7 @@ vec operator-(const vec&, const vec&);
 namespace Vec 
 {
 
-vec cross(vec&, vec&);
+vec cross(const vec&, const vec&);
 double magnitude(vec);
 
 }

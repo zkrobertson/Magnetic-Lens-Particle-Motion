@@ -62,10 +62,12 @@ public:
     MonteCarloSimulation(
         std::string grid_filename,
         double energy, 
+        int iterations,
         std::string starting_position_function,
         std::vector<double> available_masses
     ):
         Simulation {grid_filename, energy},
+        m_monte_carlo_iterations{iterations},
         m_starting_position_function{starting_position_function},
         m_available_masses{available_masses}
     {

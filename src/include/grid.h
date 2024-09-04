@@ -27,7 +27,7 @@ struct Dimensions
 };
 
 std::size_t getIndex(Dimensions& dim, vec input);
-vec get_mag_vector(std::vector<Node>& grid, Dimensions& dim, vec pos);
+vec get_mag_vector(const std::vector<Node>& grid, Dimensions& dim, vec pos);
 
 }
 

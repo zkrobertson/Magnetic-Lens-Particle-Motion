@@ -12,6 +12,6 @@ PYBIND11_MODULE(ParticleSimulation, m)
         .def("run", &SingleIonSimulation::run);
 
     py::class_<MonteCarloSimulation>(m, "MonteCarlo")
-        .def(py::init<std::string, double, std::string, std::vector<double>>())
+        .def(py::init<std::string, double, int, std::string, std::vector<double>>())
         .def("run", &MonteCarloSimulation::run);
 }

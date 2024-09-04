@@ -18,7 +18,7 @@ if __name__ == "__main__":
     y2 = y + 0.0254
     my_plot.plot(bottom_semi_circle_z, bottom_semi_circle_x, y2)
 
-    data = pd.read_csv("./../src/build/single_ion_path.csv", names=["X", "Y", "Z"])
+    data = pd.read_csv("./../build/single_ion_path.csv", names=["X", "Y", "Z"])
     my_plot.plot(data["Z"], data["X"], data["Y"])
     my_plot.set_xlabel("Z")
     my_plot.set_ylabel("X")

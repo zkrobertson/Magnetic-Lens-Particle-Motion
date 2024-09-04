@@ -24,7 +24,7 @@ public:
     void set_save_trajectory(const bool);
 
     void print();
-    bool updatePos(vec, const double);
+    bool updatePos(const vec, const double);
     void write_pos_log();
     bool inRegion();
 

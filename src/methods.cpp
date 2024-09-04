@@ -48,6 +48,8 @@ void single_ion(
     const bool logResults
 )
 {
+    particle.set_save_trajectory(logResults);
+
     if (printResults)
     {
         particle.print();
@@ -97,7 +99,7 @@ void monte_carlo(
     for (int i {0};i<N;++i){
 
         // --- Random Mass ---
-        int index { Random::get(0,std::size(available_masses)) };
+        int index { Random::get(0,std::size(available_masses)-1) };
         double mass = available_masses[index] * 1.67E-27;
 
         // --- energy to velocity ---
