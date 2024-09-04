@@ -1,44 +1,12 @@
 #include "methods.h"
+#include "randomPosition.h"
 
 namespace Methods 
 {
 
-// Used to set outer bounds of Random Starting Position
-struct rectangle_coordinates
-{
-    double y_offset;
-    double height;
-    double z_offset;
-    double width;
-};
-
-// Used to log starting position of an ion
-// Will get phased out for a more comprehensive logging system
-struct ion_starting_data
-{
-    double y;
-    double z;
-    double mass;
-    bool collected;
-};
-
-// Used to randomly choose a position within the entrance position
-// Switch to struct rectangle_coordinates
-vec defaultRandomPosition()
-{
-    double y_offset {0.0};
-    double height   {10E-3};
-    double z_offset {1E-3};
-    double width    {1E-3};
-
-    double y { static_cast<double>(Random::get(0, 10000)) * 1E-4 * height + y_offset };
-    double z { static_cast<double>(Random::get(0, 10000)) * 1E-4 * width  + z_offset };
-
-    return vec { 0.0, y, z };
-}
-
-// TODO: Input should just be a const Grid (Grid dimensions should be a part of grid class) and Particle
 // NOTE: Particle is passed by ref
+// Time step is default 1e-8
+// and print and log are default false
 void single_ion(
     std::vector<Node>& grid, 
     Grid::Dimensions& dim, 

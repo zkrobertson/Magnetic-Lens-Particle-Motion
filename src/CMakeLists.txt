@@ -16,6 +16,7 @@ pybind11_add_module(ParticleSimulation
     particle.cpp 
     methods.cpp
     simulation.cpp
+    randomPosition.cpp
     pybind.cpp
 )
 

@@ -6,17 +6,14 @@
 #include "myVectorMath.h"
 #include "particle.h"
 #include "Random.h"
+#include "randomPosition.h"
 
 #include <vector>
 
 namespace Methods 
 {
 
-
-// returns a random position in a rectangle defined by the function
-vec defaultRandomPosition();
-
-// NOTE: Optimized single_ion function. Pass Particle as reference
+// NOTE: **Optimized** single_ion function. Particle passed as reference
 void single_ion(
     std::vector<Node>& grid, 
     Grid::Dimensions& dim, 

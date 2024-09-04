@@ -34,7 +34,7 @@ void SingleIonSimulation::run(const std::string results_filename)
     // Can access the new position of myIon here
 }
 
-// TODO: Time step, logfilename
+// TODO: Time step, logfilename, and random position function
 void MonteCarloSimulation::run(const std::string results_filename)
 {
     std::cout << "Running a monte carlo simulation\n"

@@ -56,6 +56,8 @@ private:
     vec m_starting_position;
 };
 
+// TODO: Need to implament use of starting position function and available available_masses
+// also need input for time_step (should be a member of parent Simulation)
 class MonteCarloSimulation : public Simulation
 {
 public:
