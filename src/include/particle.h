@@ -27,6 +27,7 @@ public:
     bool updatePos(const vec, const double);
     void write_pos_log();
     bool inRegion();
+    bool passed();
 
 private:
     vec m_pos;

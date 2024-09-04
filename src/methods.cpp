@@ -125,7 +125,8 @@ void monte_carlo(
         for (double i : myIon.pos()) output << i << ',';
         for (double i : myIon.vel()) output << i << ',';
 
-        output << mass/1.67E-27 << ',' << 0 << '\n';
+        output << mass/1.67E-27 << ',';
+        output << myIon.passed() << '\n';
 
         // --- Loading Bar ---
         if (i%(N/3) == 0) std::cout << '.' << std::flush;
