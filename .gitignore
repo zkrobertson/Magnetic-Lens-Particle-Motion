@@ -1,8 +1,5 @@
 *.csv
-*.fld
 
 .DS_Store
 build/*
 build/
-
-magfields/
