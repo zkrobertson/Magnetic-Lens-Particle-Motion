@@ -28,6 +28,7 @@ void monte_carlo(
     Grid::Dimensions& dim, 
     int N, 
     double eV, 
+    double time_step,
     vec (*rpf)(), 
     std::string logfile_path, 
     std::vector<double> available_masses

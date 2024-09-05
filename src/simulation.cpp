@@ -63,6 +63,7 @@ void MonteCarloSimulation::run(const std::string results_filename)
                          m_dimensions, 
                          m_monte_carlo_iterations, 
                          m_energy, 
+                         m_time_step,
                          rpf,
                          results_filename,
                          m_available_masses);

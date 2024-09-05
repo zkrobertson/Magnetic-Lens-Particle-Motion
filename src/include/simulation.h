@@ -56,7 +56,7 @@ public:
 
     // If a filename is given the results get wrttien to the filename given
     // If a filename is not given the output is a summary written to the console
-    void run(const std::string results_filename="print_to_console");
+    void run(const std::string results_filename);
 
 private:
     double m_mass;

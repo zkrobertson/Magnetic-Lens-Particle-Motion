@@ -5,9 +5,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # Requires Mag-Field File location, Ion energy, Time step, Ion mass, Starting Position
-singleIonExample = ps.MonteCarlo(
+singleIonExample = ps.SingleIon(
     "/Users/kramer/Development/CEPPE/LANL/code/magfields/VectorField.fld",
-    1000.0,  # eV
+    700.0,  # eV
     1e-8,  # integrator time step [seconds]
     18,  # AMU
     [
@@ -19,7 +19,7 @@ singleIonExample = ps.MonteCarlo(
 
 # Results file location
 singleIonExample_ResultsFile = (
-    "/Users/kramer/Development/CEPPE/LANL/code/build/single_ion_logfile.csv"
+    "/Users/kramer/Development/CEPPE/LANL/code/py/single_ion_logfile.csv"
 )
 
 # Run the simulation
