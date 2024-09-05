@@ -8,7 +8,7 @@ import numpy as np
 singleIonExample = ps.SingleIon(
     "/Users/kramer/Development/CEPPE/LANL/code/magfields/VectorField.fld",
     700.0,  # eV
-    1e-8,  # integrator time step [seconds]
+    0.5e-8,  # integrator time step [seconds]
     18,  # AMU
     [
         0.0,
@@ -25,7 +25,6 @@ singleIonExample_ResultsFile = (
 # Run the simulation
 singleIonExample.run(singleIonExample_ResultsFile)
 singleIonDF = pd.read_csv(singleIonExample_ResultsFile, names=["X", "Y", "Z"])
-
 
 # Create plots with matplotlib
 my_plot = plt.figure().add_subplot(projection="3d")
