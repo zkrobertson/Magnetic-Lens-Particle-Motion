@@ -1,18 +1,20 @@
 import ParticleSimulation as ps
+
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
-# Requires Mag-Field File location, Ion energy, Ion mass, Starting Position
+# Requires Mag-Field File location, Ion energy, Time step, Ion mass, Starting Position
 singleIonExample = ps.MonteCarlo(
     "/Users/kramer/Development/CEPPE/LANL/code/magfields/VectorField.fld",
     1000.0,  # eV
+    1e-8,  # integrator time step [seconds]
     18,  # AMU
     [
         0.0,
         5e-3,
-        1e-3,
-    ],  # Depends on the origin of the relative coordinate system the .fld file was created with
+        0.5e-3,
+    ],  # starting position is defined by the origin of the relative coordinate system the .fld file was created with
 )
 
 # Results file location

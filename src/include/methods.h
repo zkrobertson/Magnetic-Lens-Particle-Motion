@@ -6,7 +6,6 @@
 #include "myVectorMath.h"
 #include "particle.h"
 #include "Random.h"
-#include "randomPosition.h"
 
 #include <vector>
 
@@ -18,19 +17,20 @@ void single_ion(
     std::vector<Node>& grid, 
     Grid::Dimensions& dim, 
     Particle& particle, 
-    const double time_step=1E-8, 
-    const bool=false, 
-    const bool=false
+    const double time_step, 
+    const bool,
+    const bool
 );
+
 
 void monte_carlo(
     std::vector<Node>& grid, 
     Grid::Dimensions& dim, 
     int N, 
     double eV, 
-    vec (*rpf)() = defaultRandomPosition, 
-    std::string logfile_path = "./monte_carlo_logfile.csv", 
-    std::vector<double> available_masses = {1,2,4,14,16,17,18}
+    vec (*rpf)(), 
+    std::string logfile_path, 
+    std::vector<double> available_masses
 );
 
 }

@@ -22,7 +22,7 @@ public:
     double mass();
 
     bool get_save_trajectory();
-    void set_save_trajectory(const bool);
+    void set_log_filename(const std::string);
 
     void print();
     void updatePos(const vec, const double);
@@ -39,7 +39,8 @@ private:
     // NOTE: Should we really log the particles postition? 
     // this might take up a lot of space
     std::vector<vec> m_pos_log {};
-    bool m_save_trajectory = false;
+    std::string m_log_filename {};
+    bool m_save_trajectory {false};
 };
 
 #endif

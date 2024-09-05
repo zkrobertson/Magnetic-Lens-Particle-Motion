@@ -16,21 +16,21 @@ void single_ion(
     const bool logResults
 )
 {
-    particle.set_save_trajectory(logResults);
 
     if (printResults)
     {
+        std::cout << "Initial State of particle:\n";
         particle.print();
         std::cout << "Running simulation...\n\n";
     }
 
     int count {0};
-    while ( particle.inRegion(dim) && count++ < 1000) particle.updatePos( Grid::get_mag_vector(grid, dim, particle.pos()), time_step );
+    while ( particle.inRegion(dim) && count++ < 1000) 
+        particle.updatePos( Grid::get_mag_vector(grid, dim, particle.pos()), time_step );
 
     if (count >= 1000) 
     {
-        std::cerr << "Number of steps reached maximum. Could be caught in propagation loop\n";
-
+        std::cerr << "Number of steps reached maximum. Could be caught in endless loop\n";
         if (!printResults) particle.print(); // if the particle will not be printed then print it here for troubleshooting
     }
 
@@ -38,6 +38,13 @@ void single_ion(
     {
         std::cout << "Results\n-------\nSteps Taken: " << count << '\n'
             << "Particle Motion Time Elapsed: " << count*time_step/1e-6 << " us" << '\n';
+        std::cout << "Particle ";
+
+        if (particle.passed(dim))
+            std::cout << "passed\n"; 
+        else 
+            std::cout << "failed to pass\n";
+
         particle.print();
     }
 
@@ -54,6 +61,7 @@ void monte_carlo(
     Grid::Dimensions& dim, 
     int N, 
     double eV, 
+    double time_step,
     vec (*rpf)(),
     std::string logfile_path,
     std::vector<double> available_masses
@@ -88,7 +96,7 @@ void monte_carlo(
         for (double i : myIon.vel()) output << i << ',';
 
         // --- Particle Path Integration ---
-        single_ion(grid, dim, myIon);
+        single_ion(grid, dim, myIon, time_step, false, false);
 
         for (double i : myIon.pos()) output << i << ',';
         for (double i : myIon.vel()) output << i << ',';
@@ -102,6 +110,7 @@ void monte_carlo(
     std::cout << '\n';
 
     output.close();
+    std::cout << "Simulation Complete. Results written too:\n" << logfile_path << '\n';
 }
 
 }

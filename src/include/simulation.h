@@ -11,27 +11,32 @@
 class Simulation 
 {
 public:
-    Simulation(std::string grid_filename, double energy)
-    : m_energy{energy}, 
-        m_grid_filename{grid_filename}, 
+    Simulation(std::string grid_filename, double energy, double time_step)
+    : m_grid_filename{grid_filename}, 
+        m_energy{energy}, 
+        m_time_step { time_step },
         m_dimensions { read_file_header(grid_filename) }, // Throw Invalid Dimensions Error in this function
         m_grid { import_file(grid_filename) }
     {
 
     }
 
-    void setGridFilename(const std::string);
+    // TODO: make sure these functions import header and grid when file is changed
+    void setGridFilename(const std::string); // Use these to redo filename setting 
     std::string getGridFilename();
 
-// So derived classes can access these members
+// Protected so derived classes can access these members
 protected:
     Grid::Dimensions m_dimensions;
     std::vector<Node> m_grid;
     double m_energy;
+    double m_time_step;
 
 private:
     std::string m_grid_filename;
 };
+
+// ------------------------------------------
 
 class SingleIonSimulation : public Simulation
 {
@@ -39,22 +44,26 @@ public:
     SingleIonSimulation(
         std::string grid_filename,
         double energy, 
+        double time_step,
         double mass, 
         vec starting_position
     ):
-        Simulation {grid_filename, energy},
+        Simulation {grid_filename, energy, time_step},
         m_mass{mass},
         m_starting_position{starting_position}
     {
-
     }
 
-    void run(const std::string results_filename);
+    // If a filename is given the results get wrttien to the filename given
+    // If a filename is not given the output is a summary written to the console
+    void run(const std::string results_filename="print_to_console");
 
 private:
     double m_mass;
     vec m_starting_position;
 };
+
+// ------------------------------------------
 
 // TODO: Need to implament use of starting position function and available available_masses
 // also need input for time_step (should be a member of parent Simulation)
@@ -64,18 +73,19 @@ public:
     MonteCarloSimulation(
         std::string grid_filename,
         double energy, 
+        double time_step,
         int iterations,
         std::string starting_position_function,
         std::vector<double> available_masses
     ):
-        Simulation {grid_filename, energy},
+        Simulation {grid_filename, energy, time_step},
         m_monte_carlo_iterations{iterations},
         m_starting_position_function{starting_position_function},
         m_available_masses{available_masses}
     {
-
     }
 
+    // Filename must be provided to run simulation and log results
     void run(const std::string results_filename);
 
 private:

@@ -29,7 +29,12 @@ vec Particle::acc() { return m_acc; }
 double Particle::mass() { return m_mass; }
 
 bool Particle::get_save_trajectory(){ return m_save_trajectory; }
-void Particle::set_save_trajectory(const bool b) { m_save_trajectory = b; }
+void Particle::set_log_filename(const std::string filename) 
+{ 
+    m_save_trajectory = true;
+    // TODO: Verify file path?
+    m_log_filename = filename;
+}
 
 void Particle::print()
 {
@@ -64,14 +69,20 @@ void Particle::updatePos(const vec B, const double dt)
 // Think the filename should be an argument maybe with a the default as single_ion_path
 void Particle::write_pos_log()
 {
-    std::ofstream outf { "single_ion_path.csv" };
+    std::ofstream outf { m_log_filename };
+    if (!outf) 
+    {
+        std::cerr << "Error opening single ion position log file\nFilename:\t" 
+            << m_log_filename << '\n';
+        return;
+    }
+
     for (vec& pos : m_pos_log)
     {
         outf << pos << '\n';
     }
 }
 
-// TODO: These should be bound by grid dimensions or at least passed in as arguments
 bool Particle::inRegion(const Grid::Dimensions& dim)
 {
     if (m_pos[0] < 0 || m_pos[0] > dim.X_max){
