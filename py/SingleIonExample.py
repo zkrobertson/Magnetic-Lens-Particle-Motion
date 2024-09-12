@@ -7,8 +7,8 @@ import numpy as np
 # Requires Mag-Field File location, Ion energy, Time step, Ion mass, Starting Position
 singleIonExample = ps.SingleIon(
     "/Users/kramer/Development/CEPPE/LANL/code/magfields/VectorField.fld",
-    700.0,  # eV
-    0.5e-8,  # integrator time step [seconds]
+    800.0,  # eV
+    0.01e-9,  # integrator time step [seconds]
     18,  # AMU
     [
         0.0,

@@ -48,7 +48,7 @@ public:
         double mass, 
         vec starting_position
     ):
-        Simulation {grid_filename, energy, time_step},
+        Simulation {grid_filename, energy, time_step*mass},
         m_mass{mass},
         m_starting_position{starting_position}
     {

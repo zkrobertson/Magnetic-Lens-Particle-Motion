@@ -4,6 +4,8 @@
 namespace Methods 
 {
 
+#define MAX_NUM_STEPS 50000
+
 // NOTE: Particle is passed by ref
 // Time step is default 1e-8
 // and print and log are default false
@@ -25,10 +27,18 @@ void single_ion(
     }
 
     int count {0};
-    while ( particle.inRegion(dim) && count++ < 1000) 
-        particle.updatePos( Grid::get_mag_vector(grid, dim, particle.pos()), time_step );
+    while ( particle.inRegion(dim) && count++ < MAX_NUM_STEPS) 
+    {
+        /*
+        std::cout << "\n---New Particle Step---\n";
+        particle.print();
+        std::cout << "Vmag: " << Vec::magnitude(m_vel) << "\n\n";
+        */
 
-    if (count >= 1000) 
+        particle.updatePos( Grid::get_mag_vector(grid, dim, particle.pos()), time_step );
+    }
+
+    if (count >= MAX_NUM_STEPS) 
     {
         std::cerr << "Number of steps reached maximum. Could be caught in endless loop\n";
         if (!printResults) particle.print(); // if the particle will not be printed then print it here for troubleshooting

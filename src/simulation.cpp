@@ -12,7 +12,7 @@ std::string Simulation::getGridFilename(){ return m_grid_filename; }
 void SingleIonSimulation::run(const std::string results_filename)
 {
     // if a results_filename is not given the default must be true and so print output to console
-    bool console_output {false};
+    bool console_output {true};
     if (!results_filename.compare("print_to_console"))
     {
         // Output a Simulation description to the console
@@ -37,10 +37,10 @@ void SingleIonSimulation::run(const std::string results_filename)
     };
 
     // NOTE: logging is done with two different methods...
-    if (!console_output) myIon.set_log_filename(results_filename);
+    if (console_output) myIon.set_log_filename(results_filename);
 
     // myIon is passed by reference and the position is modified by propogating it through the b-field
-    Methods::single_ion(m_grid, m_dimensions, myIon, m_time_step, console_output, !console_output);
+    Methods::single_ion(m_grid, m_dimensions, myIon, m_time_step, console_output, console_output);
     // Can access the new position of myIon here
 
 }
