@@ -49,7 +49,6 @@ void Particle::print()
     else std::cout << "Not Saving Trajectory\n";
 }
 
-// Leap-Frog Integration
 void Particle::updatePos(const vec B, const double dt)
 {
     vec vxb = Vec::cross(m_vel, B);
@@ -59,19 +58,18 @@ void Particle::updatePos(const vec B, const double dt)
         i = i * 1.602E-19 / m_mass;
     }
 
+    // Leap-Frog Integration
+    /*
     for (std::size_t i {0};i<3;++i){
         m_pos[i] = m_pos[i] + m_vel[i] * dt + 0.5 * m_acc[i] * dt * dt;
         m_vel[i] = m_vel[i] + (vxb[i] + m_acc[i])/2 * dt;
     }
-
-    /*
-    vec v_half {0.0, 0.0, 0.0}; 
-    for (std::size_t i {0};i<3;++i){
-        v_half[i] = m_vel[i] + m_acc[i] / 2 * dt;
-        m_pos[i] = m_pos[i] + v_half[i] * dt;
-        m_vel[i] = v_half[i] + vxb[i] / 2 * dt;
-    }
     */
+
+    // RK4
+    for (std::size_t i {0};i<3;++i){
+        
+    }
 
     m_acc = vxb;
 
